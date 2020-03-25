@@ -1,0 +1,16 @@
+.Login{
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-image: url("./assets/setupBG.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+  margin-top: 30px;
+}
