@@ -6,7 +6,7 @@ const user = 'James Hill';
 function Checklist_header(props) {
   return (
     <header className="Checklist-header">
-      <h1>Slate Check</h1>
+      <h1>{props.title}</h1>
       <p>{props.user}</p>
     </header>
   );

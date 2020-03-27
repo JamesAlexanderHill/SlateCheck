@@ -2,3 +2,9 @@
   background-color: #448DDE;
   color: white;
 }
+.Checklist-header h1{
+  margin-bottom: 0px;
+}
+.Checklist-header p{
+  margin-top: 0px;
+}
