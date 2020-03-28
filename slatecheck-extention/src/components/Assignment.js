@@ -4,6 +4,7 @@ import './Assignment.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 
 class Assignment extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ class Assignment extends React.Component {
           <div className="status">
             <p className={color}>{status}</p>
             <div className="options">
+              <a><FontAwesomeIcon icon={faEye} /></a>
               <a><FontAwesomeIcon icon={faLink} /></a>
               <a className={color}  onClick={this.handleDoneToggle}><FontAwesomeIcon icon={faCheckCircle} /></a>
             </div>
