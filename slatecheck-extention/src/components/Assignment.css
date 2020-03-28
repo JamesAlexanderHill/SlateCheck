@@ -38,6 +38,7 @@
 }
 .options{
   display: flex;
+  overflow: hidden;
 }
 .options a{
   overflow: hidden;

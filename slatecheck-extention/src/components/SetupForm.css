@@ -1,6 +1,7 @@
 form{
   margin: 10px;
   width: 80%;
+  overflow: hidden;
 }
 .loginForm input{
   padding: 5px;
