@@ -8,6 +8,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
@@ -64,8 +65,12 @@ class Group extends React.Component {
     }
 
     let visionToggleColor;
+    let visionToggleIcon;
     if(viewHidden){
-      visionToggleColor="icon-blue";
+      visionToggleIcon = <FontAwesomeIcon icon={faEyeSlash} />;
+      visionToggleColor = "icon-blue";
+    }else{
+      visionToggleIcon = <FontAwesomeIcon icon={faEye} />;
     }
 
 
@@ -79,7 +84,7 @@ class Group extends React.Component {
               <div className="Group-settingContainer">
                 <FontAwesomeIcon icon={faCog} />
                 <div className="Group-options">
-                  <a className={visionToggleColor} onClick={this.handleGroupHiddenToggle}><FontAwesomeIcon icon={faEye} /></a>
+                  <a className={visionToggleColor} onClick={this.handleGroupHiddenToggle}>{visionToggleIcon}</a>
                   <a><FontAwesomeIcon icon={faEdit} /></a>
                 </div>
               </div>

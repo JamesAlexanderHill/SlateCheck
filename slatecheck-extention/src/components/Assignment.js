@@ -4,7 +4,6 @@ import './Assignment.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 class Assignment extends React.Component {
@@ -91,10 +90,7 @@ class Assignment extends React.Component {
     }
     let showToggleColor;
     let showIcon;
-    if(show){
-      showIcon=<FontAwesomeIcon icon={faEye} />
-    }else{
-      showIcon=<FontAwesomeIcon icon={faEyeSlash} />
+    if(!show){
       showToggleColor="icon-blue";
     }
     let containerClass;
@@ -110,7 +106,7 @@ class Assignment extends React.Component {
           <div className="status">
             <p className={color}>{status}</p>
             <div className="options">
-              <a className={showToggleColor} onClick={this.handleShowToggle}>{showIcon}</a>
+              <a className={showToggleColor} onClick={this.handleShowToggle}><FontAwesomeIcon icon={faEyeSlash} /></a>
               <a><FontAwesomeIcon icon={faLink} /></a>
               <a className={color} onClick={this.handleDoneToggle}><FontAwesomeIcon icon={faCheckCircle} /></a>
             </div>
