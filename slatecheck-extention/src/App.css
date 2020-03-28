@@ -1,7 +1,34 @@
 *{
-  overflow:auto
+  overflow: auto;
 }
 .App {
   text-align: center;
   min-width: 400px;
+}
+.icon-blue{
+  color: #448DDE!important;
+}
+.blue{
+  color: #448DDE;
+}
+.orange{
+  color: #E39227;
+}
+.red{
+  color: #CA3636;
+}
+.green{
+  color: #36CA80!important;
+}
+.bg-blue{
+  background-color: #448DDE;
+}
+.bg-orange{
+  background-color: #E39227;
+}
+.bg-red{
+  background-color: #CA3636;
+}
+.bg-green{
+  background-color: #36CA80;
 }

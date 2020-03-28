@@ -28,6 +28,10 @@
 .Assignment h3{
   font-weight: 400;
 }
+.Assignment h3 span{
+  font-weight: 200;
+  font-size: 12px;
+}
 .Assignment p{
   font-weight: 200;
   padding-right: 5px;
@@ -63,28 +67,9 @@
 .options a:hover:last-child{
   color: #36CA80;
 }
-
-.blue{
-  color: #448DDE;
+.showAssignment{
+  display: block;
 }
-.orange{
-  color: #E39227;
-}
-.red{
-  color: #CA3636;
-}
-.green{
-  color: #36CA80!important;
-}
-.bg-blue{
-  background-color: #448DDE;
-}
-.bg-orange{
-  background-color: #E39227;
-}
-.bg-red{
-  background-color: #CA3636;
-}
-.bg-green{
-  background-color: #36CA80;
+.hideAssignment{
+  display: none;
 }

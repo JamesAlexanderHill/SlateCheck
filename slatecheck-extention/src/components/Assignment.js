@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 
 class Assignment extends React.Component {
   constructor(props) {
     super(props);
     this.handleDoneToggle = this.handleDoneToggle.bind(this);
+    this.handleShowToggle = this.handleShowToggle.bind(this);
   }
   getPercentage(in_min, in_max){
     var num = new Date().getTime();
@@ -27,6 +29,21 @@ class Assignment extends React.Component {
 
     return Math.round((end - t) / days);
   }
+  getTimelineString(end){
+    var d = new Date();
+    var t = d.getTime();
+
+    var delta = Math.abs(end - t) / 1000;
+    var days = Math.floor(delta / 86400);
+    delta -= days * 86400;
+    var hours = Math.floor(delta / 3600) % 24;
+    delta -= hours * 3600;
+    var minutes = Math.floor(delta / 60) % 60;
+    delta -= minutes * 60;
+    var seconds = delta % 60;
+
+    return "- " + days + " days " + hours + " hours " + minutes + " mins";
+  }
   handleDoneToggle(){
     let tempAss = this.props.assignment;
     tempAss.done = !tempAss.done;
@@ -34,28 +51,28 @@ class Assignment extends React.Component {
 
     this.props.assignmentChange(tempAss, i);
   }
+  handleShowToggle(){
+    let tempAss = this.props.assignment;
+    tempAss.show = !tempAss.show;
+    let i = this.props.index;
+
+    this.props.assignmentChange(tempAss, i);
+  }
   render() {
     const assignment = this.props.assignment;
-    console.log("Assignment");
-    console.log(assignment);
-    //get percentage
     let percent = this.getPercentage(assignment.start, assignment.finish);
-    console.log("percent");
-    console.log(percent);
-    //get days remaining
     let daysRemaining = this.getDaysRemaining(assignment.finish);
-    console.log("Days");
-    console.log(daysRemaining);
-    //get status
+    let countdownStr = this.getTimelineString(assignment.finish);
     let status;
-
     let color;
     let progressColor = "progress";
+    let show = assignment.show;
+
     if(daysRemaining > 5){
       color = "blue";
       progressColor += " bg-blue";
       status = "In Progress";
-    }else if(5 > daysRemaining && daysRemaining > 0){
+    }else if(assignment.finish > new Date().getTime()){
       color = "orange";
       progressColor += " bg-orange";
       status = "Important";
@@ -65,23 +82,37 @@ class Assignment extends React.Component {
       progressColor += " bg-red";
       status = "Overdue";
     }
-
     if(assignment.done){
+      countdownStr = "";
       percent = 100;
       color = "green";
       progressColor += " bg-green";
       status = "Done";
     }
+    let showToggleColor;
+    let showIcon;
+    if(show){
+      showIcon=<FontAwesomeIcon icon={faEye} />
+    }else{
+      showIcon=<FontAwesomeIcon icon={faEyeSlash} />
+      showToggleColor="icon-blue";
+    }
+    let containerClass;
+    if(this.props.showHidden || show){
+      containerClass = "Assignment showAssignment"
+    }else{
+      containerClass = "Assignment hideAssignment"
+    }
     return (
-      <div className="Assignment">
+      <div className={containerClass}>
         <div className="data">
-          <h3>{assignment.name}</h3>
+          <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>
           <div className="status">
             <p className={color}>{status}</p>
             <div className="options">
-              <a><FontAwesomeIcon icon={faEye} /></a>
+              <a className={showToggleColor} onClick={this.handleShowToggle}>{showIcon}</a>
               <a><FontAwesomeIcon icon={faLink} /></a>
-              <a className={color}  onClick={this.handleDoneToggle}><FontAwesomeIcon icon={faCheckCircle} /></a>
+              <a className={color} onClick={this.handleDoneToggle}><FontAwesomeIcon icon={faCheckCircle} /></a>
             </div>
           </div>
         </div>

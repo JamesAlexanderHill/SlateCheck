@@ -6,7 +6,43 @@
 }
 .Group-folder svg{
   font-size: 16px;
+  margin: 0px 2px;
+  min-width: 16px;
+  color: #31383E;
 }
+.Group-container{
+  display: flex;
+}
+.Group-settingContainer{
+  display: flex;
+}
+.Group-options{
+  width: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.5s;
+}
+.Group-settingContainer:hover .Group-options{
+  width: 50px;
+}
+.Group-options{
+  margin: 0px 2px;
+  border-left: 1px solid #D3D3D3;
+  border-right: 1px solid #D3D3D3;
+}
+.Group-options a svg{
+  color: inherit;
+}
+.Group-options a{
+  color: #D3D3D3;
+}
+.Group-options a:hover{
+  color: #448DDE;
+}
+.Group-options a:hover a{
+  color: #448DDE;
+}
+
 .assignment-list{
   background-color: #F8F8F8;
   margin: 0px;
@@ -26,4 +62,6 @@
 }
 .Group-folder h2{
   font-weight: 400;
+
+  color: #31383E;
 }
