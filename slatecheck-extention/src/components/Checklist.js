@@ -21,7 +21,7 @@ class Checklist extends React.Component {
         {
           name: "Group 1",
           show: false,
-          viewArchived: true,
+          viewHidden: true,
           assignments:[
             {
               name:"Assignment 1",
@@ -42,7 +42,7 @@ class Checklist extends React.Component {
         {
           name: "Group 2",
           show: false,
-          viewArchived: false,
+          viewHidden: false,
           assignments:[
             {
               name:"Assignment 1",
@@ -63,14 +63,15 @@ class Checklist extends React.Component {
       ],
       data2: null
     };
-    this.pushData(this.state.data);
+    //this.pushData(this.state.data);
     chrome.storage.sync.get(['tasks'], (result) => {
-      // console.log("Get Tasks");
-      // console.log(result.tasks.data);
+      console.log("Get Tasks");
+      console.log(result.tasks.data);
       if(result.tasks.data != null){
         this.setState({
           data: result.tasks.data
         });
+        console.log("Get Tasks = Success");
       }
     });
   }
@@ -90,6 +91,16 @@ class Checklist extends React.Component {
   }
   addGroup(){
     console.log("add group");
+
+    var groupTemp = {
+      name: "Unnamed",
+      show: false,
+      viewHidden: true,
+      assignments:[]
+    }
+    let data = this.state.data;
+    data.push(groupTemp);
+    this.pushData(data);
   }
   handleAssignmentUpdate(newData, index){
     //console.log(newData);
