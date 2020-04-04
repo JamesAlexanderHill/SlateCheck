@@ -1,4 +1,5 @@
 .Group-folder{
+  height: 54px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,4 +65,15 @@
   font-weight: 400;
 
   color: #31383E;
+}
+.assignmentAddBtn{
+  color: #D3D3D3;
+  font-size: 20px;
+}
+.assignmentAddBtn svg{
+  padding: 10px;
+  margin: 5px;
+}
+.assignmentAddBtn:hover{
+  color: #448DDE;
 }

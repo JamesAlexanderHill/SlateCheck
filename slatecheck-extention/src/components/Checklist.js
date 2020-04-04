@@ -7,7 +7,7 @@ import Checklist_header from './Checklist_header';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
 
 class Checklist extends React.Component {
@@ -22,20 +22,23 @@ class Checklist extends React.Component {
           name: "Group 1",
           show: false,
           viewHidden: true,
+          isEdit: false,
           assignments:[
             {
               name:"Assignment 1",
               start: 1584212738253,
               finish: 1585508738253,
               done: false,
-              show: false
+              show: false,
+              isEdit: false
             },
             {
               name:"Assignment 2",
               start: 1584230738253,
               finish: 1586640021231,
               done: false,
-              show: true
+              show: true,
+              isEdit: false
             }
           ]
         },
@@ -43,20 +46,23 @@ class Checklist extends React.Component {
           name: "Group 2",
           show: false,
           viewHidden: false,
+          isEdit: false,
           assignments:[
             {
               name:"Assignment 1",
               start: 1584731138253,
               finish: 1585560021231,
               done: false,
-              show: true
+              show: true,
+              isEdit: false
             },
             {
               name:"Assignment 2",
               start: 1584385538253,
               finish: 1585373896794,
               done: true,
-              show: true
+              show: true,
+              isEdit: false
             },
           ]
         },
@@ -96,6 +102,7 @@ class Checklist extends React.Component {
       name: "Unnamed",
       show: false,
       viewHidden: true,
+      isEdit: true,
       assignments:[]
     }
     let data = this.state.data;
@@ -129,7 +136,7 @@ class Checklist extends React.Component {
         </div>
         <footer className="Checklist_footer">
           <a href="http://slackcheck.com" target="_blank"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
-          <a onClick={this.addGroup}><FontAwesomeIcon icon={faPlus} /></a>
+          <a onClick={this.addGroup}><FontAwesomeIcon icon={faFolderPlus} /></a>
           <a onClick={this.handleSettings}><FontAwesomeIcon icon={faCog} /></a>
         </footer>
       </div>

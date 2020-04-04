@@ -7,17 +7,29 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 
 class Group extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {headingInput: this.props.group.name};
     this.handleGroupToggle = this.handleGroupToggle.bind(this);
     this.handleGroupHiddenToggle = this.handleGroupHiddenToggle.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleHeadingChange = this.handleHeadingChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
     this.handleAssignmentChange = this.handleAssignmentChange.bind(this);
+    this.addAssignment = this.addAssignment.bind(this);
+    this.doNothing = this.doNothing.bind(this);
+  }
+  doNothing(e){
+    e.preventDefault();
+    e.stopPropagation();
   }
   handleGroupToggle(){
     let dataTemp = this.props.group;
@@ -34,6 +46,46 @@ class Group extends React.Component {
     dataTemp.viewHidden = !dataTemp.viewHidden;
     this.props.updateAssignment(dataTemp, index);
   }
+  handleEdit(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("Edit");
+    let dataTemp = this.props.group;
+    let index = this.props.index;
+    dataTemp.isEdit = !dataTemp.isEdit;
+    this.props.updateAssignment(dataTemp, index);
+  }
+  handleHeadingChange(event){
+    this.setState({headingInput: event.target.value});
+  }
+  handleSave(e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("Save");
+    let dataTemp = this.props.group;
+    let index = this.props.index;
+    dataTemp.isEdit = !dataTemp.isEdit;
+    dataTemp.name = this.state.headingInput;
+    this.props.updateAssignment(dataTemp, index);
+  }
+  addAssignment(){
+    console.log("Add Assignment");
+
+    var assTemp = {
+      name:"Unnamed",
+      start: new Date().getTime(),
+      finish: 1585508738253,
+      done: false,
+      show: true,
+      isEdit: true
+    }
+    let data = this.props.group;
+    console.log(data);
+    //data.push(groupTemp);
+    //this.pushData(data);
+  }
   handleAssignmentChange(assignment, i){
     let dataTemp = this.props.group;
     dataTemp.assignments[i] = assignment;
@@ -44,6 +96,7 @@ class Group extends React.Component {
     const data = this.props.group.assignments;
     const show = this.props.group.show;
     const viewHidden = this.props.group.viewHidden;
+    const isEdit = this.props.group.isEdit;
 
     let assignments;
     if(data == null){
@@ -73,19 +126,34 @@ class Group extends React.Component {
       visionToggleIcon = <FontAwesomeIcon icon={faEye} />;
     }
 
+    //if isEdit is toggled
+    let editIcon;
+    let editIconColor;
+    let editHeading;
+    let assignmentsAdd;
+    if(isEdit){
+      editIcon = <a className={editIconColor} onClick={this.handleSave}><FontAwesomeIcon icon={faSave} /></a>;
+      //title
+      editHeading = <input id="headingInput" type="text" value={this.state.headingInput} onChange={this.handleHeadingChange} onClick={this.doNothing}/>;
+      assignmentsAdd = <a class="assignmentAddBtn" onClick={this.addAssignment}><FontAwesomeIcon icon={faPlus} /></a>;
+    }else{
+      editIcon = <a className={editIconColor} onClick={this.handleEdit}><FontAwesomeIcon icon={faEdit} /></a>;
+      editHeading = <h2>{this.props.group.name}</h2>;
+    }
+
 
     //console.log(groups);
     return (
       <div className="Group">
         <a onClick={this.handleGroupToggle}>
           <div className="Group-folder">
-            <h2>{this.props.group.name}</h2>
+            {editHeading}
             <div className="Group-container">
               <div className="Group-settingContainer">
                 <FontAwesomeIcon icon={faCog} />
                 <div className="Group-options">
                   <a className={visionToggleColor} onClick={this.handleGroupHiddenToggle}>{visionToggleIcon}</a>
-                  <a><FontAwesomeIcon icon={faEdit} /></a>
+                  {editIcon}
                 </div>
               </div>
               {icon}
@@ -95,6 +163,7 @@ class Group extends React.Component {
         </a>
         <ul className={assignmentClass}>
           {assignments}
+          {assignmentsAdd}
         </ul>
       </div>
     );
