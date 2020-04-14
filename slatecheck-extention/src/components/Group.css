@@ -77,3 +77,10 @@
 .assignmentAddBtn:hover{
   color: #448DDE;
 }
+.headingInputForm{
+  margin: 0px;
+}
+.headingInputForm input{
+  float: left;
+  font-size: 18px;
+}

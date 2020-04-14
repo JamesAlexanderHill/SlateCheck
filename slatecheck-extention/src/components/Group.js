@@ -76,15 +76,17 @@ class Group extends React.Component {
     var assTemp = {
       name:"Unnamed",
       start: new Date().getTime(),
-      finish: 1585508738253,
+      finish: new Date().getTime(),
       done: false,
       show: true,
       isEdit: true
     }
     let data = this.props.group;
     console.log(data);
-    //data.push(groupTemp);
-    //this.pushData(data);
+    let index = this.props.index;
+    //push new assignment to assignments array and then save
+    data.assignments.push(assTemp);
+    this.props.updateAssignment(data, index);
   }
   handleAssignmentChange(assignment, i){
     let dataTemp = this.props.group;
@@ -134,7 +136,7 @@ class Group extends React.Component {
     if(isEdit){
       editIcon = <a className={editIconColor} onClick={this.handleSave}><FontAwesomeIcon icon={faSave} /></a>;
       //title
-      editHeading = <input id="headingInput" type="text" value={this.state.headingInput} onChange={this.handleHeadingChange} onClick={this.doNothing}/>;
+      editHeading = <form class="headingInputForm" onSubmit={this.handleSave}><input id="headingInput" type="text" value={this.state.headingInput} onChange={this.handleHeadingChange} onClick={this.doNothing}/></form>;
       assignmentsAdd = <a class="assignmentAddBtn" onClick={this.addAssignment}><FontAwesomeIcon icon={faPlus} /></a>;
     }else{
       editIcon = <a className={editIconColor} onClick={this.handleEdit}><FontAwesomeIcon icon={faEdit} /></a>;

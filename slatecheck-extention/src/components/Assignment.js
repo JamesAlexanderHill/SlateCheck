@@ -66,6 +66,7 @@ class Assignment extends React.Component {
     let color;
     let progressColor = "progress";
     let show = assignment.show;
+    let isEdit = assignment.isEdit;
 
     if(daysRemaining > 5){
       color = "blue";
@@ -99,10 +100,18 @@ class Assignment extends React.Component {
     }else{
       containerClass = "Assignment hideAssignment"
     }
+
+    //if is edit
+    let headerInput;
+    if(isEdit){
+      headerInput = <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>;
+    }else{
+      headerInput = <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>;
+    }
     return (
       <div className={containerClass}>
         <div className="data">
-          <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>
+          {headerInput}
           <div className="status">
             <p className={color}>{status}</p>
             <div className="options">
