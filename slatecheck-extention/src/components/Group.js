@@ -78,8 +78,7 @@ class Group extends React.Component {
       start: new Date().getTime(),
       finish: new Date().getTime(),
       done: false,
-      show: true,
-      isEdit: true
+      show: true
     }
     let data = this.props.group;
     console.log(data);
@@ -105,7 +104,7 @@ class Group extends React.Component {
       assignments = <div className="no-groups">Please create a group and tasks to begin</div>;
     }else{
       assignments = data.map((assignment, index)=>{
-        return <Assignment key={index} index={index} assignment={assignment} showHidden={viewHidden} assignmentChange={this.handleAssignmentChange} />;
+        return <Assignment key={index} index={index} isEdit={isEdit} assignment={assignment} showHidden={viewHidden} assignmentChange={this.handleAssignmentChange} />;
       })
     }
 

@@ -9,8 +9,20 @@ import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 class Assignment extends React.Component {
   constructor(props) {
     super(props);
+    let dateTemp = new Date(this.props.assignment.finish);
+    let year = dateTemp.getFullYear();
+    let month = ("0" + (dateTemp.getMonth() + 1)).slice(-2);
+    let day = ("0" + dateTemp.getDate()).slice(-2);
+    this.state = {
+      assignmentTitle: this.props.assignment.name,
+      assignmentEnd: this.props.assignment.finish,
+      dateStr: year+"-"+month+"-"+day
+    };
     this.handleDoneToggle = this.handleDoneToggle.bind(this);
     this.handleShowToggle = this.handleShowToggle.bind(this);
+    this.handleAssignmentSave = this.handleAssignmentSave.bind(this);
+    this.handleAssignmentTitleChange = this.handleAssignmentTitleChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
   }
   getPercentage(in_min, in_max){
     var num = new Date().getTime();
@@ -57,6 +69,25 @@ class Assignment extends React.Component {
 
     this.props.assignmentChange(tempAss, i);
   }
+  handleAssignmentSave(){
+    let tempAss = this.props.assignment;
+    tempAss.name = this.state.assignmentTitle;
+    tempAss.finish = this.state.assignmentEnd;
+    let i = this.props.index;
+    this.props.assignmentChange(tempAss, i);
+  }
+  handleAssignmentTitleChange(event){
+    this.setState({assignmentTitle: event.target.value});
+  }
+  handleDateChange(event){
+    this.setState({assignmentEnd: event.target.valueAsNumber});
+    let dateTemp = new Date(event.target.valueAsNumber);
+    let year = dateTemp.getFullYear();
+    let month = ("0" + (dateTemp.getMonth() + 1)).slice(-2);
+    let day = ("0" + dateTemp.getDate()).slice(-2);
+    this.setState({dateStr: year+"-"+month+"-"+day});
+    console.log(event.target.valueAsNumber, year+"-"+month+"-"+day);
+  }
   render() {
     const assignment = this.props.assignment;
     let percent = this.getPercentage(assignment.start, assignment.finish);
@@ -66,7 +97,7 @@ class Assignment extends React.Component {
     let color;
     let progressColor = "progress";
     let show = assignment.show;
-    let isEdit = assignment.isEdit;
+    let isEdit = this.props.isEdit;
 
     if(daysRemaining > 5){
       color = "blue";
@@ -104,7 +135,8 @@ class Assignment extends React.Component {
     //if is edit
     let headerInput;
     if(isEdit){
-      headerInput = <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>;
+      status = "";
+      headerInput = <form id="assignmentTitleForm" onSubmit={this.handleAssignmentSave}><input id="titleInput" type="text" value={this.state.assignmentTitle} onChange={this.handleAssignmentTitleChange} onClick={this.doNothing}/><input type="date" id="dueDate" onChange={this.handleDateChange} value={this.state.dateStr}/></form>;
     }else{
       headerInput = <h3>{assignment.name} <span className={color}>{countdownStr}</span></h3>;
     }

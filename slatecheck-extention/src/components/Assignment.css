@@ -73,3 +73,7 @@
 .hideAssignment{
   display: none;
 }
+#assignmentTitleForm{
+  display: flex;
+  justify-content: space-between;
+}
