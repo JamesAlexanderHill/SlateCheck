@@ -1,4 +1,5 @@
 /* global chrome */
+/* global _gaq */
 //import assets
 import React from 'react';
 import './Group.css';
@@ -52,6 +53,7 @@ class Group extends React.Component {
     e.stopPropagation();
   }
   addAssignment(){
+    _gaq.push(['_trackEvent', "Assignment", 'Created']);
     let assTemp = {
       title:"",
       start: new Date().getTime(),
