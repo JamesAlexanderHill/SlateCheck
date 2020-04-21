@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Slate Check",
   "description": "A checklist chrome extention (Alpha)",
-  "version": "0.1.0",
+  "version": "0.1.1",
 
   "browser_action": {
     "default_popup": "index.html",
@@ -16,7 +16,7 @@
   "background": {
     "scripts": ["app/background.js"]
   },
-  "content_security_policy": "script-src 'self' 'sha256-6+c9PYdf/pd88pVnWZC3fReyPatcL3pfoO2dGU+8w5E='; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'sha256-6+c9PYdf/pd88pVnWZC3fReyPatcL3pfoO2dGU+8w5E=' https://ssl.google-analytics.com; object-src 'self'",
   "permissions": [
     "storage"
   ]
