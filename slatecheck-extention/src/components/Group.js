@@ -1,168 +1,175 @@
+/* global chrome */
+//import assets
 import React from 'react';
 import './Group.css';
 import Assignment from './Assignment';
 
+//icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
-import { faEye } from '@fortawesome/free-solid-svg-icons'
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faArchive } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 class Group extends React.Component {
+  //constructor
   constructor(props) {
     super(props);
-    this.state = {headingInput: this.props.group.name};
+    //set state
+    this.state = {
+      _id: this.props.data._id,
+      title: this.props.data.title,
+      showArchived: this.props.data.showArchived,
+      viewAssignments: this.props.data.viewAssignments,
+      isEdit: this.props.data.isEdit,
+      assignments: this.props.data.assignments
+    };
+    //bind functions
+    this.handleViewArchiveToggle = this.handleViewArchiveToggle.bind(this);
+    this.handleEditToggle = this.handleEditToggle.bind(this);
     this.handleGroupToggle = this.handleGroupToggle.bind(this);
-    this.handleGroupHiddenToggle = this.handleGroupHiddenToggle.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleHeadingChange = this.handleHeadingChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleAssignmentChange = this.handleAssignmentChange.bind(this);
-    this.addAssignment = this.addAssignment.bind(this);
+    this.handleAssignmentUpdate = this.handleAssignmentUpdate.bind(this);
+
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleTitleSubmission = this.handleTitleSubmission.bind(this);
+
     this.doNothing = this.doNothing.bind(this);
+    this.addAssignment = this.addAssignment.bind(this);
+
+  }
+  //functions
+  saveStateChrome(data){
+    console.log("Save: ", data);
+    chrome.storage.sync.set({[data._id]: data}, () => {
+      console.log("Group Saved to Chrome", data);
+    })
   }
   doNothing(e){
     e.preventDefault();
     e.stopPropagation();
   }
-  handleGroupToggle(){
-    let dataTemp = this.props.group;
-    let index = this.props.index;
-    dataTemp.show = !dataTemp.show;
-    this.props.updateAssignment(dataTemp, index);
-  }
-  handleGroupHiddenToggle(e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    let dataTemp = this.props.group;
-    let index = this.props.index;
-    dataTemp.viewHidden = !dataTemp.viewHidden;
-    this.props.updateAssignment(dataTemp, index);
-  }
-  handleEdit(e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    console.log("Edit");
-    let dataTemp = this.props.group;
-    let index = this.props.index;
-    dataTemp.isEdit = !dataTemp.isEdit;
-    this.props.updateAssignment(dataTemp, index);
-  }
-  handleHeadingChange(event){
-    this.setState({headingInput: event.target.value});
-  }
-  handleSave(e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    console.log("Save");
-    let dataTemp = this.props.group;
-    let index = this.props.index;
-    dataTemp.isEdit = !dataTemp.isEdit;
-    dataTemp.name = this.state.headingInput;
-    this.props.updateAssignment(dataTemp, index);
-  }
   addAssignment(){
-    console.log("Add Assignment");
-
-    var assTemp = {
-      name:"Unnamed",
+    let assTemp = {
+      title:"",
       start: new Date().getTime(),
       finish: new Date().getTime(),
       done: false,
-      show: true
+      archived: false,
+      isEdit: true
     }
-    let data = this.props.group;
-    console.log(data);
-    let index = this.props.index;
-    //push new assignment to assignments array and then save
-    data.assignments.push(assTemp);
-    this.props.updateAssignment(data, index);
+    let assignmentsTemp = this.state.assignments;
+    assignmentsTemp.push(assTemp);
+    this.setState({assignments: assignmentsTemp});
   }
-  handleAssignmentChange(assignment, i){
-    let dataTemp = this.props.group;
-    dataTemp.assignments[i] = assignment;
-    let index = this.props.index;
-    this.props.updateAssignment(dataTemp, index);
+  //handlers
+  handleGroupToggle(){
+    this.setState({viewAssignments: !this.state.viewAssignments});
+  }
+  handleViewArchiveToggle(e){
+    e.stopPropagation();
+    this.setState({showArchived: !this.state.showArchived});
+  }
+  handleEditToggle(e){
+    if(e != null){
+      e.stopPropagation();
+    }
+    if(this.state.isEdit){
+      let temp = this.state;
+      temp.isEdit = false;
+      this.saveStateChrome(temp);
+      this.setState({isEdit: false});
+    }else{
+      this.setState({isEdit: true});
+    }
+    //console.log("Edit Toggle: ", this.state);
+    //this.setState({isEdit: !this.state.isEdit});
+  }
+  handleAssignmentUpdate(assignment, i){
+    let temp = this.state.assignments;
+    temp[i] = assignment;
+    this.setState({assignments: temp});
+    this.saveStateChrome(this.state);
+  }
+  handleTitleChange(event) {
+    this.setState({title: event.target.value});
+  }
+  handleTitleSubmission(e){
+    e.preventDefault();
+    this.handleEditToggle();
   }
   render() {
-    const data = this.props.group.assignments;
-    const show = this.props.group.show;
-    const viewHidden = this.props.group.viewHidden;
-    const isEdit = this.props.group.isEdit;
+    //debug
+    if(this.props.debug == "true"){
+      console.log("Group Render: ", this.props.data._id ,this.state);
+    }
+    /*variables*/
 
+    /*views*/
     let assignments;
-    if(data == null){
-      assignments = <div className="no-groups">Please create a group and tasks to begin</div>;
+    if(this.state.assignments.length >= 1){
+      assignments = this.state.assignments.map((assignment, index)=>{
+        return <Assignment key={index} data={assignment} index={index} assignmentUpdate={this.handleAssignmentUpdate} showArchived={this.state.showArchived} debug={this.props.debug}/>;
+        //return <Assignment key={index} index={index} isEdit={isEdit} assignment={assignment} showHidden={viewHidden} assignmentChange={this.handleAssignmentChange} />;
+      });
     }else{
-      assignments = data.map((assignment, index)=>{
-        return <Assignment key={index} index={index} isEdit={isEdit} assignment={assignment} showHidden={viewHidden} assignmentChange={this.handleAssignmentChange} />;
-      })
+      console.log("Error: no assignments in " + this.props.data._id);
     }
 
-    let icon;
-    let assignmentClass;
-    if(show){
-      icon = <FontAwesomeIcon icon={faChevronDown} />;
-      assignmentClass = "assignment-list show";
-    }else{
-      icon = <FontAwesomeIcon icon={faChevronRight} />;
-      assignmentClass = "assignment-list hide";
-    }
-
-    let visionToggleColor;
-    let visionToggleIcon;
-    if(viewHidden){
-      visionToggleIcon = <FontAwesomeIcon icon={faEyeSlash} />;
-      visionToggleColor = "icon-blue";
-    }else{
-      visionToggleIcon = <FontAwesomeIcon icon={faEye} />;
-    }
-
-    //if isEdit is toggled
-    let editIcon;
-    let editIconColor;
-    let editHeading;
     let assignmentsAdd;
-    if(isEdit){
-      editIcon = <a className={editIconColor} onClick={this.handleSave}><FontAwesomeIcon icon={faSave} /></a>;
-      //title
-      editHeading = <form class="headingInputForm" onSubmit={this.handleSave}><input id="headingInput" type="text" value={this.state.headingInput} onChange={this.handleHeadingChange} onClick={this.doNothing}/></form>;
+    if(this.state.isEdit){
       assignmentsAdd = <a class="assignmentAddBtn" onClick={this.addAssignment}><FontAwesomeIcon icon={faPlus} /></a>;
+    }
+    let dropdownIcon;
+    if(!this.state.viewAssignments){
+      assignments = "";
+      assignmentsAdd = "";
+      dropdownIcon = <FontAwesomeIcon icon={faChevronRight} />
     }else{
-      editIcon = <a className={editIconColor} onClick={this.handleEdit}><FontAwesomeIcon icon={faEdit} /></a>;
-      editHeading = <h2>{this.props.group.name}</h2>;
+      dropdownIcon = <FontAwesomeIcon icon={faChevronDown} />
+    }
+    let viewArchiveColor;
+    if(this.state.showArchived == true){
+      viewArchiveColor = "blue-i"
+    }
+    let isEditIcon;
+    let editTitle;
+    let editIconColor = "default";
+    if(this.state.isEdit == true){
+      editIconColor = 'blue-i';
+      editTitle = <form onSubmit={this.handleTitleSubmission}><input autofocus class="titleInput" type="text" value={this.state.title} placeholder="Group..." onClick={this.doNothing} onChange={this.handleTitleChange} /></form>
+      isEditIcon = <FontAwesomeIcon icon={faSave} />;
+    }else{
+      let titleTemp;
+      if(this.state.title == ""){
+        titleTemp = <h2 class="folder-title-grey">Give me a name!</h2>;
+      }else{
+        titleTemp = <h2>{this.state.title}</h2>;
+      }
+      editTitle = titleTemp;
+      isEditIcon = <FontAwesomeIcon icon={faEdit} />;
     }
 
-
-    //console.log(groups);
     return (
-      <div className="Group">
+      <div id={this.state._id} className="group-container">
         <a onClick={this.handleGroupToggle}>
-          <div className="Group-folder">
-            {editHeading}
-            <div className="Group-container">
-              <div className="Group-settingContainer">
+          <div className="folder">
+            {editTitle}
+            <div className="icons">
+              <div className="settings">
                 <FontAwesomeIcon icon={faCog} />
-                <div className="Group-options">
-                  <a className={visionToggleColor} onClick={this.handleGroupHiddenToggle}>{visionToggleIcon}</a>
-                  {editIcon}
+                <div className="options">
+                  <a class={viewArchiveColor} onClick={this.handleViewArchiveToggle}><FontAwesomeIcon icon={faArchive} /></a>
+                  <a class={editIconColor} onClick={this.handleEditToggle}>{isEditIcon}</a>
                 </div>
               </div>
-              {icon}
+              {dropdownIcon}
             </div>
-
           </div>
         </a>
-        <ul className={assignmentClass}>
+        <ul class="assignment-list">
           {assignments}
           {assignmentsAdd}
         </ul>

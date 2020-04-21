@@ -1,79 +1,97 @@
-.Assignment{
+/* line 1, Assignment.scss */
+.assignment-container {
   margin: 5px 10px;
   padding: 5px 10px;
   border-radius: 5px;
 }
-.Assignment:hover{
+/* line 5, Assignment.scss */
+.assignment-container:hover {
   background-color: #ECF5FC;
 }
-.Assignment .data{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* line 7, Assignment.scss */
+.assignment-container:hover .data .status {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ecf5fc 10%, #ecf5fc 100%);
 }
-.Assignment .timeline{
+/* line 9, Assignment.scss */
+.assignment-container:hover .data .status .options a {
+  width: 12px;
+  padding: 0px 2px;
+}
+/* line 15, Assignment.scss */
+.assignment-container .data {
+  position: relative;
+  text-align: left;
+}
+/* line 18, Assignment.scss */
+.assignment-container .data .status {
+  display: flex;
+  white-space: nowrap;
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  background-color: inherit;
+  padding-left: 25px;
+}
+/* line 26, Assignment.scss */
+.assignment-container .data .status .options {
+  display: flex;
+  overflow: hidden;
+}
+/* line 29, Assignment.scss */
+.assignment-container .data .status .options a {
+  overflow: hidden;
+  width: 0px;
+  transition: width 0.5s;
+  cursor: pointer;
+  padding: 0px;
+  color: lightgrey;
+}
+/* line 36, Assignment.scss */
+.assignment-container .data .status .options a:hover {
+  color: #448DDE;
+}
+/* line 38, Assignment.scss */
+.assignment-container .data .status .options a:hover:last-child {
+  color: #36CA80;
+}
+/* line 46, Assignment.scss */
+.assignment-container .timeline {
   width: 100%;
   background-color: #DBDBDB;
   margin: 5px 0px;
   border-radius: 5px;
 }
-.Assignment .timeline .progress{
+/* line 51, Assignment.scss */
+.assignment-container .timeline .progressBar {
   min-height: 7px;
   transition: width 0.5s;
   width: 0px;
 }
-.Assignment h3, .Assignment p{
-  margin: 0px;
+/* line 57, Assignment.scss */
+.assignment-container .hide .progress {
+  width: 0px !important;
 }
-.Assignment h3{
-  font-weight: 400;
-}
-.Assignment h3 span{
-  font-weight: 200;
-  font-size: 12px;
-}
-.Assignment p{
-  font-weight: 200;
-  padding-right: 5px;
-}
-
-.Assignment .status{
-  display: flex;
-}
-.options{
-  display: flex;
-  overflow: hidden;
-}
-.options a{
-  overflow: hidden;
-  width: 0px;
-  transition: width 0.5s;
-}
-.hide .progress{
-  width:0px!important;
-}
-.Assignment:hover .options a{
-  width: 12px;
-  padding: 0px 2px;
-}
-.options a{
-  cursor: pointer;
-  padding: 0px;
-  color: lightgrey;
-}
-.options a:hover{
-  color: #448DDE;
-}
-.options a:hover:last-child{
-  color: #36CA80;
-}
-.showAssignment{
-  display: block;
-}
-.hideAssignment{
+/* line 60, Assignment.scss */
+.assignment-container.hideAssignment {
   display: none;
 }
-#assignmentTitleForm{
-  display: flex;
-  justify-content: space-between;
+/* line 63, Assignment.scss */
+.assignment-container h3 {
+  margin: 0px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 5px;
+}
+/* line 69, Assignment.scss */
+.assignment-container h3 span {
+  font-weight: 200;
+  font-size: 12px;
+  white-space: nowrap;
+}
+/* line 75, Assignment.scss */
+.assignment-container p {
+  margin: 0px;
+  font-weight: 200;
+  padding-right: 5px;
 }

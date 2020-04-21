@@ -1,90 +1,80 @@
 /* global chrome */
-
+//import assets
 import React from 'react';
 import './App.css';
-import Login from './components/Login';
 import Checklist from './components/Checklist';
-import Settings from './components/Settings';
 
 class App extends React.Component {
+  //constructor
   constructor(props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-    this.settingsToggle = this.settingsToggle.bind(this);
+    //set state
     this.state = {
-      isLoggedIn: false,
-      isGuest: false,
-      isSettings: false,
-      account: ''
+      idList: null
     };
-    chrome.storage.sync.get(['data'], (result) => {
-      this.setState({
-        isLoggedIn: result.data.isLoggedIn,
-        isGuest: result.data.isGuest,
-        isSettings: result.data.isSettings,
-        account: result.data.account
-      });
-    });
-  }
-  logout(){
-    let stateTemp = {
-      isLoggedIn: false,
-      isGuest: false,
-      isSettings: false,
-      account: ''
+    //bind functions
+    this.getIDs = this.getIDs.bind(this);
+    this.setIDs = this.setIDs.bind(this);
+    this.updateIDs = this.updateIDs.bind(this);
+
+    if(this.props.debug == "true"){
+      console.log("App constructor()");
     }
-    this.setState({
-      isLoggedIn: stateTemp.isLoggedIn,
-      isGuest: stateTemp.isGuest,
-      isSettings: stateTemp.isSettings,
-      account: stateTemp.account
-    });
-    chrome.storage.sync.set({data: stateTemp}, () => {
-      console.log("Logged Out");
-    })
+
+    this.getIDs();
   }
-  login(account) {
-    let stateTemp = {
-      isLoggedIn: true,
-      isGuest: account.guest,
-      isSettings: false,
-      account: account
+  componentDidMount() {
+    if(this.props.debug == "true"){
+      console.log("App componentDidMount()");
     }
-    this.setState({
-      isLoggedIn: stateTemp.isLoggedIn,
-      isGuest: stateTemp.isGuest,
-      isSettings: stateTemp.isSettings,
-      account: stateTemp.account
-    });
-    chrome.storage.sync.set({data: stateTemp}, () => {
-      console.log("Saved data to chrome");
-    })
-  }
-  settingsToggle(){
-    console.log(this.state);
-    this.setState({
-      isSettings: !this.state.isSettings
-    });
+    //this.getIDs();
   }
 
-  render() {
-    const isLoggedIn = this.state.isLoggedIn;
-    const isSettings = this.state.isSettings;
-    const account = this.state.account;
-    let view;
-    if(!isLoggedIn) {
-      view = <Login account={account} login={this.login}/>;
-    }else{
-      if(!isSettings){
-        view = <Checklist account={account} title="Slate Check" settingsToggle={this.settingsToggle} />;
-      }else{
-        view = <Settings account={account} title="Settings" logout={this.logout} />;
+  //functions
+  getIDs(){
+    if(this.props.debug == "true"){
+      console.log("getIDs(): ");
+    }
+    chrome.storage.sync.get(['slateCheckData'], (result) => {
+      if(this.props.debug == "true"){
+        console.log("Loaded slateCheckData from Chrome", result);
       }
+      if(result.slateCheckData == undefined){
+        this.setState({idList: []});
+      }else{
+        this.setState({idList: result.slateCheckData.idList});
+      }
+    });
+  }
+  setIDs(){
+    chrome.storage.sync.set({slateCheckData: this.state}, () => {
+      console.log("slateCheckData Saved to Chrome", this.state);
+    })
+  }
+  updateIDs(id){
+    console.log("updateIDs()", id);
+    let temp = this.state.idList;
+    temp.push(id);
+    this.setState({idList: temp});
+    this.setIDs();
+    console.log("App idList", this.state.idList);
+  }
+  //handlers
+
+  render() {
+    //debug
+    if(this.props.debug == "true"){
+      console.log("App Render: ", this.state);
+    }
+    //logic
+    //views
+    let content = <p>Loading IDs</p>;
+    if(this.state.idList != null){
+      content = <Checklist idList={this.state.idList} addID={this.updateIDs} debug={this.props.debug}/>;
     }
     return (
       <div className="App">
-        {view}
+        {content}
       </div>
     );
   }

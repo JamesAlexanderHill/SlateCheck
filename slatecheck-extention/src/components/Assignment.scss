@@ -1,0 +1,80 @@
+.assignment-container{
+  margin: 5px 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  &:hover{
+    background-color: #ECF5FC;
+    .data .status{
+      background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(236,245,252,1) 10%, rgba(236,245,252,1) 100%);
+      .options a{
+        width: 12px;
+        padding: 0px 2px;
+      }
+    }
+  }
+  .data{
+    position: relative;
+    text-align: left;
+    .status{
+      display: flex;
+      white-space: nowrap;
+      position: absolute;
+      top: 2px;
+      right: 0px;
+      background-color: inherit;
+      padding-left: 25px;
+      .options{
+        display: flex;
+        overflow: hidden;
+        a{
+          overflow: hidden;
+          width: 0px;
+          transition: width 0.5s;
+          cursor: pointer;
+          padding: 0px;
+          color: lightgrey;
+          &:hover{
+            color: #448DDE;
+            &:last-child{
+              color: #36CA80;
+            }
+          }
+        }
+      }
+    }
+  }
+  .timeline{
+    width: 100%;
+    background-color: #DBDBDB;
+    margin: 5px 0px;
+    border-radius: 5px;
+    .progressBar{
+      min-height: 7px;
+      transition: width 0.5s;
+      width: 0px;
+    }
+  }
+  .hide .progress{
+    width:0px!important;
+  }
+  &.hideAssignment{
+    display: none;
+  }
+  h3{
+    margin: 0px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
+    span{
+      font-weight: 200;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+  }
+  p{
+    margin: 0px;
+    font-weight: 200;
+    padding-right: 5px;
+  }
+}

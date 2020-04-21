@@ -1,0 +1,78 @@
+.group-container{
+  .folder{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 54px;
+    padding: 0px 20px;
+    &:hover{
+      background-color: #FCFCFC;
+      cursor: pointer;
+      .icons{
+        .settings{
+          .options{
+            width: 50px;
+          }
+        }
+      }
+    }
+    h2{
+      font-weight: 400;
+      color: #31383E;
+    }
+    .folder-title-grey{
+      color: #D3D3D3;
+    }
+    svg{
+      font-size: 16px;
+      margin: 0px 2px;
+      min-width: 16px;
+      color: #31383E;
+    }
+    input{
+      border: none;
+      font-size: 18px;
+      color: darkgrey;
+      background-color: #ECF5FC;
+    }
+    .icons{
+      display: flex;
+      .settings{
+        display: flex;
+        .options{
+          width: 0px;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: width 0.5s;
+          margin: 0px 2px;
+          border-left: 1px solid #D3D3D3;
+          border-right: 1px solid #D3D3D3;
+          a{
+            color: #D3D3D3;
+            svg{
+              color: inherit;
+            }
+            &:hover{
+              color: #448DDE;
+            }
+          }
+        }
+      }
+    }
+  }
+  .assignment-list{
+    margin: 0px;
+    padding: 0px;
+    .assignmentAddBtn{
+      color: #D3D3D3;
+      font-size: 20px;
+      svg{
+        padding: 10px;
+        margin: 5px;
+        &:hover{
+          color: #448DDE;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+footer{
+  background-color: #F3F4F6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  a{
+    font-size: 20px;
+    color: #DBDBDB;
+    padding: 15px;
+    border: 0px;
+    cursor: pointer;
+    &:hover{
+      color: #448DDE;
+    }
+  }
+}

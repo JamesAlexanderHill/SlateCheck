@@ -1,19 +1,22 @@
-/* line 1, Checklist.scss */
-footer {
+.no-groups{
+  padding: 20px;
+}
+
+
+
+.Checklist_footer{
   background-color: #F3F4F6;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-/* line 6, Checklist.scss */
-footer a {
+.Checklist_footer a{
   font-size: 20px;
   color: #DBDBDB;
   padding: 15px;
   border: 0px;
   cursor: pointer;
 }
-/* line 12, Checklist.scss */
-footer a:hover {
+.Checklist_footer a:hover{
   color: #448DDE;
 }

@@ -1,0 +1,83 @@
+.Assignment{
+  margin: 5px 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+.Assignment:hover{
+  background-color: #ECF5FC;
+}
+.Assignment .data{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Assignment .timeline{
+  width: 100%;
+  background-color: #DBDBDB;
+  margin: 5px 0px;
+  border-radius: 5px;
+}
+.Assignment .timeline .progress{
+  min-height: 7px;
+  transition: width 0.5s;
+  width: 0px;
+}
+.Assignment h3, .Assignment p{
+  margin: 0px;
+}
+.Assignment h3{
+  font-weight: 400;
+}
+.Assignment h3 span{
+  font-weight: 200;
+  font-size: 12px;
+}
+.Assignment p{
+  font-weight: 200;
+  padding-right: 5px;
+}
+
+.Assignment .status{
+  display: flex;
+}
+.options{
+  display: flex;
+  overflow: hidden;
+}
+.options a{
+  overflow: hidden;
+  width: 0px;
+  transition: width 0.5s;
+}
+.hide .progress{
+  width:0px!important;
+}
+.Assignment:hover .options a{
+  width: 12px;
+  padding: 0px 2px;
+}
+.options a{
+  cursor: pointer;
+  padding: 0px;
+  color: lightgrey;
+}
+.options a:hover{
+  color: #448DDE;
+}
+.options a:hover:last-child{
+  color: #36CA80;
+}
+.showAssignment{
+  display: block;
+}
+.hideAssignment{
+  display: none;
+}
+#assignmentForm{
+  width: calc(100% - 40px);
+}
+.dateInputs{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

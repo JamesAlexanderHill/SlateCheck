@@ -5,17 +5,11 @@
   text-align: center;
   min-width: 400px;
 }
-.default{
-  color: inherit;
-}
 .icon-blue{
   color: #448DDE!important;
 }
 .blue{
   color: #448DDE;
-}
-.blue-i{
-  color: #448DDE!important;
 }
 .orange{
   color: #E39227;

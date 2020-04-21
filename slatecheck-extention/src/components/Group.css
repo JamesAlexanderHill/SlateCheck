@@ -1,86 +1,89 @@
-.Group-folder{
-  height: 54px;
+/* line 2, Group.scss */
+.group-container .folder {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 54px;
   padding: 0px 20px;
 }
-.Group-folder svg{
+/* line 8, Group.scss */
+.group-container .folder:hover {
+  background-color: #FCFCFC;
+  cursor: pointer;
+}
+/* line 13, Group.scss */
+.group-container .folder:hover .icons .settings .options {
+  width: 50px;
+}
+/* line 19, Group.scss */
+.group-container .folder h2 {
+  font-weight: 400;
+  color: #31383E;
+}
+/* line 23, Group.scss */
+.group-container .folder .folder-title-grey {
+  color: #D3D3D3;
+}
+/* line 26, Group.scss */
+.group-container .folder svg {
   font-size: 16px;
   margin: 0px 2px;
   min-width: 16px;
   color: #31383E;
 }
-.Group-container{
+/* line 32, Group.scss */
+.group-container .folder input {
+  border: none;
+  font-size: 18px;
+  color: darkgrey;
+  background-color: #ECF5FC;
+}
+/* line 38, Group.scss */
+.group-container .folder .icons {
   display: flex;
 }
-.Group-settingContainer{
+/* line 40, Group.scss */
+.group-container .folder .icons .settings {
   display: flex;
 }
-.Group-options{
+/* line 42, Group.scss */
+.group-container .folder .icons .settings .options {
   width: 0px;
   overflow: hidden;
   white-space: nowrap;
   transition: width 0.5s;
-}
-.Group-settingContainer:hover .Group-options{
-  width: 50px;
-}
-.Group-options{
   margin: 0px 2px;
   border-left: 1px solid #D3D3D3;
   border-right: 1px solid #D3D3D3;
 }
-.Group-options a svg{
-  color: inherit;
-}
-.Group-options a{
+/* line 50, Group.scss */
+.group-container .folder .icons .settings .options a {
   color: #D3D3D3;
 }
-.Group-options a:hover{
+/* line 52, Group.scss */
+.group-container .folder .icons .settings .options a svg {
+  color: inherit;
+}
+/* line 55, Group.scss */
+.group-container .folder .icons .settings .options a:hover {
   color: #448DDE;
 }
-.Group-options a:hover a{
-  color: #448DDE;
-}
-
-.assignment-list{
-  background-color: #F8F8F8;
+/* line 63, Group.scss */
+.group-container .assignment-list {
   margin: 0px;
   padding: 0px;
-  transition: height 0.5s;
 }
-.hide{
-  height: 0px;
-}
-.show{
-  height: auto;
-}
-
-.Group-folder:hover{
-  background-color: #FCFCFC;
-  cursor: pointer;
-}
-.Group-folder h2{
-  font-weight: 400;
-
-  color: #31383E;
-}
-.assignmentAddBtn{
+/* line 66, Group.scss */
+.group-container .assignment-list .assignmentAddBtn {
   color: #D3D3D3;
   font-size: 20px;
 }
-.assignmentAddBtn svg{
+/* line 69, Group.scss */
+.group-container .assignment-list .assignmentAddBtn svg {
   padding: 10px;
   margin: 5px;
 }
-.assignmentAddBtn:hover{
+/* line 72, Group.scss */
+.group-container .assignment-list .assignmentAddBtn svg:hover {
   color: #448DDE;
-}
-.headingInputForm{
-  margin: 0px;
-}
-.headingInputForm input{
-  float: left;
-  font-size: 18px;
 }

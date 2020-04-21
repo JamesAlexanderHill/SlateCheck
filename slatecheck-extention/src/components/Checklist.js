@@ -1,140 +1,111 @@
 /* global chrome */
-
+//import assets
 import React from 'react';
 import './Checklist.css';
 import Group from './Group';
-import Checklist_header from './Checklist_header';
 
+//icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 class Checklist extends React.Component {
+  //constructor
   constructor(props) {
     super(props);
-    this.handleSettings = this.handleSettings.bind(this);
-    this.addGroup = this.addGroup.bind(this);
-    this.handleAssignmentUpdate = this.handleAssignmentUpdate.bind(this);
+    //set state
     this.state = {
-      data: [
-        {
-          name: "Group 1",
-          show: false,
-          viewHidden: true,
-          isEdit: false,
-          assignments:[
-            {
-              name:"Assignment 1",
-              start: 1584212738253,
-              finish: 1585508738253,
-              done: false,
-              show: false,
-              isEdit: false
-            },
-            {
-              name:"Assignment 2",
-              start: 1584230738253,
-              finish: 1586640021231,
-              done: false,
-              show: true,
-              isEdit: false
-            }
-          ]
-        },
-        {
-          name: "Group 2",
-          show: false,
-          viewHidden: false,
-          isEdit: false,
-          assignments:[
-            {
-              name:"Assignment 1",
-              start: 1584731138253,
-              finish: 1585560021231,
-              done: false,
-              show: true,
-              isEdit: false
-            },
-            {
-              name:"Assignment 2",
-              start: 1584385538253,
-              finish: 1585373896794,
-              done: true,
-              show: true,
-              isEdit: false
-            },
-          ]
-        },
-      ],
-      data2: null
+      groups:null
     };
-    //this.pushData(this.state.data);
-    chrome.storage.sync.get(['tasks'], (result) => {
-      console.log("Get Tasks");
-      console.log(result.tasks.data);
-      if(result.tasks.data != null){
-        this.setState({
-          data: result.tasks.data
-        });
-        console.log("Get Tasks = Success");
+    //bind functions
+    this.getGroupData = this.getGroupData.bind(this);
+    this.getRandomID = this.getRandomID.bind(this);
+    this.addGroup = this.addGroup.bind(this);
+
+    if(this.props.debug == "true"){
+      console.log("Checklist constructor()");
+    }
+
+    this.getGroupData();
+  }
+  componentDidMount() {
+    if(this.props.debug == "true"){
+      console.log("Checklist componentDidMount()");
+    }
+    //this.getGroupData();
+  }
+
+  //functions
+  getGroupData(){
+    if(this.props.debug == "true"){
+      console.log("getGroupData(): ", this.props.idList);
+    }
+    chrome.storage.sync.get(this.props.idList, (result) => {
+      if(this.props.debug == "true"){
+        console.log("Loaded Groups from Chrome", result);
+      }
+      let groupArr = Object.values(result);
+      if(groupArr.length > 0){
+        this.setState({groups: groupArr});
       }
     });
   }
-  pushData(dataVar){
-    let stateTemp = {
-      data: dataVar
+  getRandomID(length,chars,invalid){
+    if(invalid == null){
+      invalid = [];
     }
-    this.setState({
-      data: stateTemp.data
-    });
-    chrome.storage.sync.set({tasks: stateTemp}, () => {
-      console.log("Saved tasks to chrome");
-    })
-  }
-  handleSettings(){
-    this.props.settingsToggle();
+    let random = '';
+    while(invalid.includes("sc-"+random) || random == ''){
+      for (var i = length; i > 0; --i){
+        random += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    return "sc-"+random;
   }
   addGroup(){
-    console.log("add group");
-
-    var groupTemp = {
-      name: "Unnamed",
-      show: false,
-      viewHidden: true,
+    let tempGroup = {
+      _id: this.getRandomID(5,"abcdefghijklmnopqrstuvwxyz", this.state.groups),
+      title: null,
+      showArchived: false,
+      viewAssignments: true,
       isEdit: true,
-      assignments:[]
+      assignments: []
     }
-    let data = this.state.data;
-    data.push(groupTemp);
-    this.pushData(data);
-  }
-  handleAssignmentUpdate(newData, index){
-    //console.log(newData);
-    let data = this.state.data;
-    data[index] = newData;
-    this.pushData(data);
+    if(this.props.debug == "true"){
+      console.log("addGroup(): ", tempGroup);
+    }
+    let temp = this.state.groups;
+    if(temp == null){
+      temp = [];
+    }
+    temp.push(tempGroup);
+    this.props.addID(tempGroup._id);
+    this.setState({groups: temp});
   }
   render() {
-    const data = this.state.data;
-
-    let groups;
-    if(data == null){
-      groups = <div className="no-groups">Please create a group and tasks to begin</div>;
-    }else{
-      groups = data.map((group, index) => {
-        //console.log(group);
-        return <Group group={group} index={index} key={index} updateAssignment={this.handleAssignmentUpdate} />
-      })
+    //debug
+    if(this.props.debug == "true"){
+      console.log("Checklist Render: ", this.state);
     }
-    //console.log(groups);
+    /*variables*/
+
+    /*views*/
+    let content;
+    if(this.state.groups != null){
+      content = this.state.groups.map((group, index)=>{
+        return <Group key={group._id} data={group} debug={this.props.debug}/>;
+      })
+    }else{
+      content = <p>Click the button below to add a group</p>;
+      if(this.props.debug == "true"){
+        console.log("Error: no groups in checklist", this.state);
+      }
+    }
     return (
-      <div className="Checklist">
-        <Checklist_header title={this.props.title} user={this.props.account.username}/>
-        <div className="Checklist-groups">
-          {groups}
-        </div>
-        <footer className="Checklist_footer">
+      <div id="checklist">
+        {content}
+        <footer>
           <a href="http://slackcheck.com" target="_blank"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <a onClick={this.addGroup}><FontAwesomeIcon icon={faFolderPlus} /></a>
           <a onClick={this.handleSettings}><FontAwesomeIcon icon={faCog} /></a>
