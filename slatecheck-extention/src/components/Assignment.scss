@@ -2,14 +2,28 @@
   margin: 5px 10px;
   padding: 5px 10px;
   border-radius: 5px;
-  &:hover{
+  input{
+    border-radius: 5px;
+    font-size: 14px;
+    padding-left: 5px;
+    height: 17px;
+    background-color: #f3f3f3;
+    border: none;
+  }
+  &:hover, &.editAssignment{
     background-color: #ECF5FC;
+    input{
+      background-color: white;
+    }
     .data .status{
       background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(236,245,252,1) 10%, rgba(236,245,252,1) 100%);
       .options a{
         width: 12px;
         padding: 0px 2px;
       }
+    }
+    .timeline .date-container{
+      background-color: #ECF5FC!important;
     }
   }
   .data{
@@ -52,6 +66,15 @@
       min-height: 7px;
       transition: width 0.5s;
       width: 0px;
+    }
+    .date-container{
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      svg{
+        font-size: 16px;
+        color: #448DDE;
+      }
     }
   }
   .hide .progress{

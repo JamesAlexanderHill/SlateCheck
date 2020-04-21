@@ -5,24 +5,41 @@
   border-radius: 5px;
 }
 /* line 5, Assignment.scss */
-.assignment-container:hover {
+.assignment-container input {
+  border-radius: 5px;
+  font-size: 14px;
+  padding-left: 5px;
+  height: 17px;
+  background-color: #f3f3f3;
+  border: none;
+}
+/* line 13, Assignment.scss */
+.assignment-container:hover, .assignment-container.editAssignment {
   background-color: #ECF5FC;
 }
-/* line 7, Assignment.scss */
-.assignment-container:hover .data .status {
+/* line 15, Assignment.scss */
+.assignment-container:hover input, .assignment-container.editAssignment input {
+  background-color: white;
+}
+/* line 18, Assignment.scss */
+.assignment-container:hover .data .status, .assignment-container.editAssignment .data .status {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #ecf5fc 10%, #ecf5fc 100%);
 }
-/* line 9, Assignment.scss */
-.assignment-container:hover .data .status .options a {
+/* line 20, Assignment.scss */
+.assignment-container:hover .data .status .options a, .assignment-container.editAssignment .data .status .options a {
   width: 12px;
   padding: 0px 2px;
 }
-/* line 15, Assignment.scss */
+/* line 25, Assignment.scss */
+.assignment-container:hover .timeline .date-container, .assignment-container.editAssignment .timeline .date-container {
+  background-color: #ECF5FC !important;
+}
+/* line 29, Assignment.scss */
 .assignment-container .data {
   position: relative;
   text-align: left;
 }
-/* line 18, Assignment.scss */
+/* line 32, Assignment.scss */
 .assignment-container .data .status {
   display: flex;
   white-space: nowrap;
@@ -32,12 +49,12 @@
   background-color: inherit;
   padding-left: 25px;
 }
-/* line 26, Assignment.scss */
+/* line 40, Assignment.scss */
 .assignment-container .data .status .options {
   display: flex;
   overflow: hidden;
 }
-/* line 29, Assignment.scss */
+/* line 43, Assignment.scss */
 .assignment-container .data .status .options a {
   overflow: hidden;
   width: 0px;
@@ -46,36 +63,47 @@
   padding: 0px;
   color: lightgrey;
 }
-/* line 36, Assignment.scss */
+/* line 50, Assignment.scss */
 .assignment-container .data .status .options a:hover {
   color: #448DDE;
 }
-/* line 38, Assignment.scss */
+/* line 52, Assignment.scss */
 .assignment-container .data .status .options a:hover:last-child {
   color: #36CA80;
 }
-/* line 46, Assignment.scss */
+/* line 60, Assignment.scss */
 .assignment-container .timeline {
   width: 100%;
   background-color: #DBDBDB;
   margin: 5px 0px;
   border-radius: 5px;
 }
-/* line 51, Assignment.scss */
+/* line 65, Assignment.scss */
 .assignment-container .timeline .progressBar {
   min-height: 7px;
   transition: width 0.5s;
   width: 0px;
 }
-/* line 57, Assignment.scss */
+/* line 70, Assignment.scss */
+.assignment-container .timeline .date-container {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+/* line 74, Assignment.scss */
+.assignment-container .timeline .date-container svg {
+  font-size: 16px;
+  color: #448DDE;
+}
+/* line 80, Assignment.scss */
 .assignment-container .hide .progress {
   width: 0px !important;
 }
-/* line 60, Assignment.scss */
+/* line 83, Assignment.scss */
 .assignment-container.hideAssignment {
   display: none;
 }
-/* line 63, Assignment.scss */
+/* line 86, Assignment.scss */
 .assignment-container h3 {
   margin: 0px;
   font-weight: 400;
@@ -83,13 +111,13 @@
   overflow: hidden;
   margin-right: 5px;
 }
-/* line 69, Assignment.scss */
+/* line 92, Assignment.scss */
 .assignment-container h3 span {
   font-weight: 200;
   font-size: 12px;
   white-space: nowrap;
 }
-/* line 75, Assignment.scss */
+/* line 98, Assignment.scss */
 .assignment-container p {
   margin: 0px;
   font-weight: 200;

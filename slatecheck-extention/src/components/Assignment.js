@@ -10,6 +10,7 @@ import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
 
 class Assignment extends React.Component {
   //constructor
@@ -172,11 +173,12 @@ class Assignment extends React.Component {
     let editDates;
     let editIconColor = "default";
     if(this.state.isEdit == true){
+      displayClass += " editAssignment";
       status = "Don't forget to save";
       color = "red";
       editIconColor = 'blue-i'
-      editTitle = <input autofocus class="titleInput" type="text" value={this.state.title} onChange={this.handleTitleChange} />
-      editDates = <div class="date-container"><input class="dateInput" type="date" value={this.millies_to_YYYY_MM_DD(this.state.start)} onChange={this.handleStartChange} /><input class="dateInput" type="date" value={this.millies_to_YYYY_MM_DD(this.state.finish)} onChange={this.handleFinishChange} /></div>;
+      editTitle = <input autofocus class="titleInput" type="text" value={this.state.title} placeholder="Task..." onChange={this.handleTitleChange} />
+      editDates = <div class="date-container"><input class="dateInput" type="date" value={this.millies_to_YYYY_MM_DD(this.state.start)} onChange={this.handleStartChange} /><FontAwesomeIcon icon={faLongArrowAltRight}/><input class="dateInput" type="date" value={this.millies_to_YYYY_MM_DD(this.state.finish)} onChange={this.handleFinishChange} /></div>;
       editIcon = <FontAwesomeIcon icon={faSave} />;
     }else{
       editTitle = <h3>{this.props.data.title} <span className={color}>{countdownStr}</span></h3>;
