@@ -1,6 +1,10 @@
 *{
   overflow: auto;
 }
+::selection {
+  color: none;
+  background: none;
+}
 .App {
   text-align: center;
   min-width: 400px;
