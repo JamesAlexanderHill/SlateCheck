@@ -1,4 +1,5 @@
 /* global chrome */
+/* global _gaq */
 //import assets
 import React from 'react';
 import './Checklist.css';
@@ -64,6 +65,7 @@ class Checklist extends React.Component {
     return "sc-"+random;
   }
   addGroup(){
+    _gaq.push(['_trackEvent', "Group", 'Created']);
     let tempGroup = {
       _id: this.getRandomID(5,"abcdefghijklmnopqrstuvwxyz", this.state.groups),
       title: null,

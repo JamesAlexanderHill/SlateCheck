@@ -1,3 +1,4 @@
+/* global _gaq */
 //import assets
 import React from 'react';
 import './Assignment.css';
@@ -103,6 +104,11 @@ class Assignment extends React.Component {
     this.setState({isEdit: !this.state.isEdit});
   }
   handleDoneToggle(){
+    if(!this.props.data.done){
+      _gaq.push(['_trackEvent', "Assignment", 'Completed']);
+    }else{
+      _gaq.push(['_trackEvent', "Assignment", 'Marked Incomplete']);
+    }
     let temp = this.props.data;
     temp.done = !temp.done;
     let i = this.props.index;
