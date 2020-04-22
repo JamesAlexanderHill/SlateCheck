@@ -4,6 +4,8 @@
 import React from 'react';
 import './Checklist.css';
 import Group from './Group';
+import Header from './Header';
+import Settings from './Settings';
 
 //icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,12 +19,14 @@ class Checklist extends React.Component {
     super(props);
     //set state
     this.state = {
-      groups:null
+      groups:null,
+      settingsToggle: false
     };
     //bind functions
     this.getGroupData = this.getGroupData.bind(this);
     this.getRandomID = this.getRandomID.bind(this);
     this.addGroup = this.addGroup.bind(this);
+    this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
 
     if(this.props.debug == "true"){
       console.log("Checklist constructor()");
@@ -85,15 +89,22 @@ class Checklist extends React.Component {
     this.props.addID(tempGroup._id);
     this.setState({groups: temp});
   }
+
+  //handlers
+  handleSettingsToggle(){
+    this.setState({settingsToggle: !this.state.settingsToggle});
+  }
   render() {
     //debug
     if(this.props.debug == "true"){
       console.log("Checklist Render: ", this.state);
     }
     /*variables*/
+    let content;
+    let settingsColor;
+    let titleStr = "Slate Check";
 
     /*views*/
-    let content;
     if(this.state.groups != null){
       content = this.state.groups.map((group, index)=>{
         return <Group key={group._id} data={group} debug={this.props.debug}/>;
@@ -104,13 +115,19 @@ class Checklist extends React.Component {
         console.log("Error: no groups in checklist", this.state);
       }
     }
+    if(this.state.settingsToggle){
+      content = <Settings />;
+      settingsColor = "blue";
+      titleStr = "Settings";
+    }
     return (
       <div id="checklist">
+        <Header title={titleStr} username="Guest" debug={this.props.debug}/>
         {content}
         <footer>
           <a href="http://slackcheck.com" target="_blank"><FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <a onClick={this.addGroup}><FontAwesomeIcon icon={faFolderPlus} /></a>
-          <a onClick={this.handleSettings}><FontAwesomeIcon icon={faCog} /></a>
+          <a class={settingsColor} onClick={this.handleSettingsToggle}><FontAwesomeIcon icon={faCog} /></a>
         </footer>
       </div>
     );

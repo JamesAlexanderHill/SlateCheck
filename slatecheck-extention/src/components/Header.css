@@ -1,0 +1,12 @@
+/* line 1, Header.scss */
+header {
+  background-color: #448DDE;
+  color: white;
+  width: 100%;
+  padding: 20px 0px;
+  text-align: center;
+}
+/* line 7, Header.scss */
+header h1, header .account-label {
+  margin: 0px;
+}
